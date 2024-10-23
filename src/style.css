@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url(variables.css);
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Satoshi-Regular';
+    transition: all 0.3s ease-in-out;
+}
+
+:root{
+    --color-bg-primary: #2B292A;
+    --color-bg-secondary: #D9D9D9;
+    --color-primary: #000000;
+    --color-secondary: #808080;
+    --color-btn-primary: #93D8A2;
+    --color-btn-secondary: #FFFFFF;
+}
