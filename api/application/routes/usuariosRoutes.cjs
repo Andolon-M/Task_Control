@@ -8,9 +8,7 @@ const fs = require("fs");
 const {
   authenticateToken
 } = require("../../infrastructure/middlewares/authMiddleware.cjs");
-const passportGithub = require("../../infrastructure/middlewares/githubAuth.cjs");
 const passportGoogle = require("../../infrastructure/middlewares/googleAuth.cjs");
-const passportDiscord = require("../../infrastructure/middlewares/discordAuth.cjs");
 
 const router = express.Router();
 const userController = new UserController();
@@ -26,92 +24,7 @@ router.get("/session-data", authenticateToken, (req, res) => {
   }
 });
 
-// Ruta para iniciar la autenticación con Github
-router.get(
-  "/github",
-  passportGithub.authenticate("github", {
-    session: false,
-  })
-);
 
-router.get(
-  "/github/callback",
-  passportGithub.authenticate("github", {
-    session: false,
-    failureRedirect: "http://localhost:3000/register",
-  }),
-  async (req, res) => {
-    try {
-      // Carga node-fetch de manera dinámica
-      const fetch = (await import("node-fetch")).default;
-      // Verifica si el usuario está registrado o no
-      if (!req.user.isRegistered) {
-        // URL de la foto de perfil
-        const photoUrl = req.user.photos[0].value;
-
-        // Genera un nombre único para la imagen
-        const fileName = Date.now() + "-profile.jpg";
-        const uploadPath = path.join(__dirname, "../../fotosPerfil/", fileName);
-
-        // Descarga la foto de perfil
-        const response = await fetch(photoUrl);
-
-        if (!response.ok) {
-          throw new Error('Error descargando la foto de perfil');
-        }
-
-        // Guarda la imagen descargada en el directorio
-        const fileStream = fs.createWriteStream(uploadPath);
-        await new Promise((resolve, reject) => {
-          response.body.pipe(fileStream);
-          response.body.on("error", reject);
-          fileStream.on("finish", resolve);
-        });
-
-        // Crea el nuevo usuario con la foto guardada localmente
-        const newUser = {
-          id: req.user.id,
-          nombre: req.user.username,
-          correo: "none@gmail.com",
-          password: "",
-          tipo: "comprador",
-          fotoPerfil: fileName, // Guarda solo el nombre de la foto en la base de datos
-          genero:"None",
-          fechaNacimiento:"0000-0-0",
-          direccion: "",
-          telefono: "+00 000000000",
-          favoritos: [],
-          compras: [],
-          talleresInscritos: [],
-          cupones: [],
-          provider: req.user.provider,
-        };
-
-        // Realiza la petición con fetch para crear el usuario
-        const userResponse = await fetch("http://localhost:3001/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-
-        if (userResponse.ok) {
-          userController.handlePassportLogin(req, res, "checks");
-        } else {
-          const errorData = await userResponse.json();
-          res.status(userResponse.status).json(errorData);
-        }
-      } else {
-        // Si ya está registrado, redirigir a 'home'
-        userController.handlePassportLogin(req, res, "home");
-      }
-    } catch (error) {
-      console.error("Error guardando el usuario en la base de datos: ", error);
-      res.status(500).send("Error en la autenticación con Github");
-    }
-  }
-);
 
 // Ruta para iniciar la autenticación con Google
 router.get(
@@ -183,93 +96,6 @@ router.get(
     }
   }
 );
-
-// Ruta para iniciar la autenticación con Discord
-router.get(
-  "/discord",
-  passportDiscord.authenticate("discord", {
-    session: false,
-  })
-);
-
-router.get(
-  "/discord/callback",
-  passportDiscord.authenticate("discord", {
-    failureRedirect: "http://localhost:3001/login",
-  }),
-  async (req, res) => {
-    try {
-      // Carga node-fetch de manera dinámica
-      const fetch = (await import("node-fetch")).default;
-      // Verifica si el usuario está registrado o no
-      if (!req.user.isRegistered) {
-        // URL de la foto de perfil
-        const photoUrl = req.user.avatar;
-
-        // Genera un nombre único para la imagen
-        const fileName = Date.now() + "-profile.jpg";
-        const uploadPath = path.join(__dirname, "../../fotosPerfil/", fileName);
-
-        // Descarga la foto de perfil
-        const response = await fetch(`https://cdn.discordapp.com/avatars/${req.user.id}/${photoUrl}.png`);
-
-        if (!response.ok) {
-          throw new Error('Error descargando la foto de perfil');
-        }
-
-        // Guarda la imagen descargada en el directorio
-        const fileStream = fs.createWriteStream(uploadPath);
-        await new Promise((resolve, reject) => {
-          response.body.pipe(fileStream);
-          response.body.on("error", reject);
-          fileStream.on("finish", resolve);
-        });
-
-        // Crea el nuevo usuario con la foto guardada localmente
-        const newUser = {
-          id: req.user.id,
-          nombre: req.user.username,
-          correo: req.user.email || "none@gmail.com",
-          password: "",
-          tipo: "comprador",
-          fotoPerfil: fileName, // Guarda solo el nombre de la foto en la base de datos
-          genero:"None",
-          fechaNacimiento:"0000-0-0",
-          direccion: "",
-          telefono: "+00 000000000",
-          favoritos: [],
-          compras: [],
-          talleresInscritos: [],
-          cupones: [],
-          provider: req.user.provider,
-        };
-
-        // Realiza la petición con fetch para crear el usuario
-        const userResponse = await fetch("http://localhost:3001/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
-        });
-
-        if (userResponse.ok) {
-          userController.handlePassportLogin(req, res, "checks");
-        } else {
-          const errorData = await userResponse.json();
-          res.status(userResponse.status).json(errorData);
-        }
-      } else {
-        // Si ya está registrado, redirigir a 'home'
-        userController.handlePassportLogin(req, res, "home");
-      }
-    } catch (error) {
-      console.error("Error guardando el usuario en la base de datos: ", error);
-      res.status(500).send("Error en la autenticación con Discord");
-    }
-  }
-);
-
 
 router.get('/vefiryToken', authenticateToken,  (req, res) => res.status(200).json({menssage: 'token valido', token: true}))
 

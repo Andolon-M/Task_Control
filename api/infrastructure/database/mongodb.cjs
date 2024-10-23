@@ -40,7 +40,9 @@ class ConnectToDatabase {
      */
     async connectOpen() {
         // Crea una nueva instancia de MongoClient con la URL de conexión
-        this.connection = new MongoClient(`${process.env.VITE_MONGO_ACCESS}${this.user}:${this.getPassword}@${process.env.VITE_MONGO_HOST}:${process.env.VITE_MONGO_PORT}`);
+        this.connection = new MongoClient(`${process.env.VITE_MONGO_ACCESS}${this.user}:${this.getPassword}@${process.env.VITE_MONGO_HOST}:${process.env.VITE_MONGO_PORT}/`);
+        console.log(`${process.env.VITE_MONGO_ACCESS}${this.user}:${this.getPassword}@${process.env.VITE_MONGO_HOST}:${process.env.VITE_MONGO_PORT}/`);
+        
         try {
             await this.connection.connect(); // Intenta conectar a la base de datos
             this.db = this.connection.db(process.env.VITE_MONGO_DB_NAME); // Selecciona la base de datos

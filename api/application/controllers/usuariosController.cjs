@@ -251,7 +251,7 @@ class UserController {
 
       const isMatch = await bcrypt.compare(userExiste?.password, password);
       console.log(isMatch);
-      /* if (!isMatch) return res.status(400).json({ message: "Contraseña incorrecta" }) */
+      if (!isMatch) return res.status(400).json({ message: "Contraseña incorrecta" }) 
 
       const token = jwtUtils.generateToken(userExiste);
       const user = userExiste.id;
