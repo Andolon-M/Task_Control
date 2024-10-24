@@ -1,0 +1,39 @@
+[
+  {
+    "_id": {
+      "$oid": "670955b3100ec33685ed67af"
+    },
+    "usuario_fk": {
+      "$oid": "671958ef126c02e29875eccb"
+    },
+    "titulo": "Hacer la compra",
+    "descripcion": "Comprar alimentos y productos de limpieza.",
+    "estado": "pendiente",
+    "prioridad": "alta",
+    "fecha_de_creacion": {
+      "$date": "2024-01-05T09:00:00.000Z"
+    },
+    "fecha_de_actualizacion": {
+      "$date": "2024-01-05T09:00:00.000Z"
+    },
+    "recordatorios": [
+      {
+        "fecha_de_recordatorio": {
+          "$date": "2024-01-05T08:00:00.000Z"
+        },
+        "mensaje": "No olvides comprar leche y pan."
+      }
+    ],
+    "etiquetas": [ 
+      {
+        "$oid": "67095709100ec33685ed67b7"
+      }, 
+      {
+        "$oid": "67095709100ec33685ed67b8"
+      }
+    ],
+    "categoria": {
+      "$oid": "6709552e100ec33685ed67ac"
+    }
+  }
+]
