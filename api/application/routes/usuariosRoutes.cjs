@@ -24,8 +24,6 @@ router.get("/session-data", authenticateToken, (req, res) => {
   }
 });
 
-
-
 // Ruta para iniciar la autenticación con Google
 router.get(
   "/auth-google",
@@ -97,17 +95,14 @@ router.get(
   }
 );
 
-router.get('/vefiryToken', authenticateToken,  (req, res) => res.status(200).json({menssage: 'token valido', token: true}))
-
+router.get('/validarSesion ', authenticateToken,  (req, res) => res.status(200).json({menssage: 'token valido', token: true}))
 
 //rutas de crud usuarios
-router.get("/search", authenticateToken, (req, res) => userController.searchUsers(req, res));
-
 router.get("/:id", authenticateToken, (req, res) => userController.getUser(req, res));
 
 router.get("/", authenticateToken, (req, res) => userController.getUsers(req, res));
 
-router.post('/login', (req, res) => userController.login(req, res));
+router.post('/iniciarSesion', (req, res) => userController.login(req, res));
 
 router.post("/upload-profile-picture", authenticateToken, async (req, res) => {
   const userId = req.session.passport.user;

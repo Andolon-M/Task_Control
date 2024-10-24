@@ -6,14 +6,10 @@ const path = require("path"); // Utilidad para trabajar con rutas de archivos
 const fileUpload = require("express-fileupload"); // Middleware para cargar archivos
 const corsConfig = require("../middlewares/server/corsConfig.cjs"); // Configuración de CORS
 
-const productsRoutes = require('../../application/routes/productsRoutes.cjs');
-const paymentsRoutes = require('../../application/routes/paymentsRoutes.cjs');
 const sessionConfig = require("../middlewares/server/sessionConfig.cjs"); // Configuración de sesiones
 const usuariosRoutes = require("../../application/routes/usuariosRoutes.cjs"); // Rutas de usuarios
-const requestsRoutes = require('../../application/routes/requestsRoutes.cjs');
 
 const {authenticateToken} = require("../../infrastructure/middlewares/authMiddleware.cjs");
-
 const { jsonParseErrorHandler } = require("../middlewares/errorHandling.cjs"); // Middleware para manejar errores de JSON
 const { limiTotal } = require("../middlewares/rateLimit.cjs"); // Middleware para limitar solicitudes
 
@@ -36,12 +32,9 @@ const createServer = () => {
   app.use(passport.session()); // Middleware para gestionar sesiones con Passport
   app.use(fileUpload()); // Middleware para manejar la carga de archivos
   
-
   // Rutas
-  app.use("/users", usuariosRoutes); // Configura las rutas para la gestión de usuarios
-  app.use('/products', authenticateToken, productsRoutes);
-  app.use('/payments', authenticateToken, paymentsRoutes);
-  app.use('/requests', authenticateToken, requestsRoutes);
+  app.use("/usuarios", usuariosRoutes); // Configura las rutas para la gestión de usuarios
+  app.use('/actividades', authenticateToken, );
   
   //* Crear un servidor HTTP usando la aplicación Express
   const server = http.createServer(app); // Crea un servidor HTTP con la aplicación Express
