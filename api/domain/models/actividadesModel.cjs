@@ -5,7 +5,7 @@ class Actividades {
     async findAll() {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('actividades');
-        
+
         const res = await collection.find().toArray();
         return res;
     }
@@ -42,8 +42,8 @@ class Actividades {
             let obj = ConnectToDatabase.instanceConnect;
             const collection = obj.db.collection('actividades');
             const res = await collection.updateOne(
-                { _id: new ObjectId(id) }, 
-                { $set: updateData } 
+                { _id: new ObjectId(id) },
+                { $set: updateData }
             );
             return res;
         } catch (error) {
@@ -64,6 +64,29 @@ class Actividades {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('actividades');
         const res = await collection.find(find).toArray();
+        return res;
+    }
+
+    async findLabelsByActivity(idActivity) {
+        let obj = ConnectToDatabase.instanceConnect;
+        const collection = obj.db.collection('actividades');
+        const res = await collection.aggregate(
+            [
+
+                {
+                    $match: {
+                        _id: new ObjectId(idActivity)
+                    }
+                },
+                {
+                    $project: {
+                        etiquetas: 1
+                    }
+                }
+
+
+            ]
+        ).toArray();
         return res;
     }
 }

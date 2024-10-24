@@ -106,6 +106,19 @@ class ActivitiesController {
             res.status(errorObj.status).json({ message: errorObj.message });
         }
     }
+    
+    async getLabelsOfActivity(req, res){
+        try {
+            if (!this.validateRequest(req)) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            const activitys = await this.activitiesService.getLabelsOfActivity(req.params.idActivity, req?.session?.passport?.user);
+            res.status(201).json(activitys);
+        } catch (error) {
+            const errorObj = JSON.parse(error.message);
+            res.status(errorObj.status).json({ message: errorObj.message });
+        }
+    }
 }
 
 module.exports = ActivitiesController;

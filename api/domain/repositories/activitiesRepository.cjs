@@ -54,6 +54,15 @@ class ActivitiesRepository {
             throw new Error(JSON.stringify({status: 400, message: 'Error al obtener las actividades del usuario'}));
         }
     }
+
+    async getLabelsOfActivity(idActivity){
+        try {
+            const actividades = new Actividades();
+            return await actividades.findLabelsByActivity(idActivity);
+        } catch (error) {
+            throw new Error(JSON.stringify({status: 400, message: 'Error al obtener las actividades del usuario'}));
+        }
+    }
 }
 
 module.exports = ActivitiesRepository;
