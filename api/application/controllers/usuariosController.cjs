@@ -249,7 +249,7 @@ class UserController {
       const userExiste = await this.userService.getUserbyUserName(userName)
       if (userExiste?.status === 404) return res.status(404).json({ message: "Usuario no encontrado" })
 
-      const isMatch = await bcrypt.compare(password, userExiste?.password);
+      const isMatch = await bcrypt.compare(password, userExiste?.contrasena_hash);
       console.log(isMatch);
       if (!isMatch) return res.status(400).json({ message: "Contraseña incorrecta" }) 
 
