@@ -1,26 +1,32 @@
-{
-  "_id": {
-    "$oid": "671958ef126c02e29875eccb"
-  },
-  "id": "1234567890",
-  "nombre_usuario": "johndoe",
-  "email": "johndoe@example.com",
-  "contrasena_hash": "123",
-  "fecha_de_creacion": "2024-01-01T10:00:00Z",
-  "estadisticas": [
-    {
-      "fecha_de_la_estadística": {
-        "$date": "2024-01-10T10:00:00.000Z"
-      },
-      "actividades_completadas": 1,
-      "objetivos_completados": 0
+[
+  {
+    "_id": {
+      "$oid": "670951c4100ec33685ed6793"
     },
-    {
-      "fecha_de_la_estadística": {
-        "$date": "2024-01-17T10:00:00.000Z"
-      },
-      "actividades_completadas": 5,
-      "objetivos_completados": 1
-    }
-  ]
-}
+    "id": 12324578541,
+    "nombre_usuario": "johndoe",
+    "email": "johndoe@example.com",
+    "contrasena_hash": "$2a$10$1PoczNo0YMjTeH8mz1ORk.pwNcLxa71gyn4rjTHV6V6jy6hdKhXdG",
+    "fecha_de_creacion": "2024-01-01T10:00:00Z"
+  },
+  {
+    "_id": {
+      "$oid": "670951c4100ec33685ed6794"
+    },
+    "id": 12324578542,
+    "nombre_usuario": "janedoe",
+    "email": "janedoe@example.com",
+    "contrasena_hash": "$2a$10$1PoczNo0YMjTeH8mz1ORk.pwNcLxa71gyn4rjTHV6V6jy6hdKhXdG",
+    "fecha_de_creacion": "2024-01-02T12:00:00Z"
+  },
+  {
+    "_id": {
+      "$oid": "670951c4100ec33685ed6795"
+    },
+    "id": 12324578543,
+    "nombre_usuario": "user123",
+    "email": "user123@example.com",
+    "contrasena_hash": "$2a$10$1PoczNo0YMjTeH8mz1ORk.pwNcLxa71gyn4rjTHV6V6jy6hdKhXdG",
+    "fecha_de_creacion": "2024-01-03T14:00:00Z"
+  }
+]
