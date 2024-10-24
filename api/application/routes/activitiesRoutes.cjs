@@ -18,6 +18,8 @@ router.post('/', (req, res) => activitiesController.createActivity(req, res));
 
 router.post('/etiquetas/', (req, res) => activitiesController.addLabelToActivity(req, res));
 
+router.post('/:idActivity/etiquetas/:label', (req, res) => activitiesController.addLabelToActivity(req, res));
+
 // Actualizar una actividad por su ID
 router.put('/:id', (req, res) => activitiesController.updateActivity(req, res));
 

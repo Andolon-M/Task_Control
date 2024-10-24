@@ -99,7 +99,7 @@ class ActivitiesController {
             if (!this.validateRequest(req)) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            const activity = await this.activitiesService.addLabelToActivity(req.body, req?.session?.passport?.user);
+            const activity = await this.activitiesService.addLabelToActivity(req.params, req?.session?.passport?.user);
             res.status(201).json(activity);
         } catch (error) {
             const errorObj = JSON.parse(error.message);
