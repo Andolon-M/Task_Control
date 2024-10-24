@@ -11,7 +11,7 @@ const usuariosRoutes = require("../../application/routes/usuariosRoutes.cjs"); /
 const activitiesRoutes = require("../../application/routes/activitiesRoutes.cjs"); 
 const remindersRoutes = require("../../application/routes/remindersRoutes.cjs"); 
 const goalsRoutes = require("../../application/routes/goalsRoutes.cjs"); 
-
+const reportsRoutes = require("../../application/routes/reportsRoutes.cjs"); 
 
 const {authenticateToken} = require("../../infrastructure/middlewares/authMiddleware.cjs");
 const { jsonParseErrorHandler } = require("../middlewares/errorHandling.cjs"); // Middleware para manejar errores de JSON
@@ -41,6 +41,7 @@ const createServer = () => {
   app.use('/actividades', activitiesRoutes);
   app.use('/recordatorios', remindersRoutes);
   app.use('/objetivos', goalsRoutes);
+  app.use('/reportes', reportsRoutes);
   
   //* Crear un servidor HTTP usando la aplicación Express
   const server = http.createServer(app); // Crea un servidor HTTP con la aplicación Express
