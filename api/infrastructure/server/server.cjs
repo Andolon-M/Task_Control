@@ -8,7 +8,8 @@ const corsConfig = require("../middlewares/server/corsConfig.cjs"); // Configura
 
 const sessionConfig = require("../middlewares/server/sessionConfig.cjs"); // Configuración de sesiones
 const usuariosRoutes = require("../../application/routes/usuariosRoutes.cjs"); // Rutas de usuarios
-const activitiesRoutes = require("../../application/routes/activitiesRoutes.cjs"); // Rutas de usuarios
+const activitiesRoutes = require("../../application/routes/activitiesRoutes.cjs"); 
+const remindersRoutes = require("../../application/routes/remindersRoutes.cjs"); 
 
 
 const {authenticateToken} = require("../../infrastructure/middlewares/authMiddleware.cjs");
@@ -37,6 +38,7 @@ const createServer = () => {
   // Rutas
   app.use("/usuarios", usuariosRoutes); // Configura las rutas para la gestión de usuarios
   app.use('/actividades', activitiesRoutes);
+  app.use('/actividades', remindersRoutes);
   
   //* Crear un servidor HTTP usando la aplicación Express
   const server = http.createServer(app); // Crea un servidor HTTP con la aplicación Express
