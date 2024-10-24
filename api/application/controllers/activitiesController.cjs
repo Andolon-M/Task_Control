@@ -10,7 +10,7 @@ class ActivitiesController {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             // Puedes registrar los errores aquí si lo deseas
-            console.error("Errores de validación:", errors.array()); 
+            console.error("Errores de validación:", errors.array());
             return false;
         }
         return true;
@@ -74,7 +74,7 @@ class ActivitiesController {
                 return res.status(400).json({ errors: errors.array() });
             }
             const activity = await this.activitiesService.deleteActividad(req.params.id);
-            res.status(204).json(activity); 
+            res.status(204).json(activity);
         } catch (error) {
             const errorObj = JSON.parse(error.message);
             res.status(errorObj.status).json({ message: errorObj.message });
@@ -88,6 +88,19 @@ class ActivitiesController {
             }
             const activities = await this.activitiesService.getActividadesByUsuarioId(req.params.userId);
             res.json(activities);
+        } catch (error) {
+            const errorObj = JSON.parse(error.message);
+            res.status(errorObj.status).json({ message: errorObj.message });
+        }
+    }
+
+    async addLabelToActivity(req, res) {
+        try {
+            if (!this.validateRequest(req)) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            const activity = await this.activitiesService.addLabelToActivity(req.body, req?.session?.passport?.user);
+            res.status(201).json(activity);
         } catch (error) {
             const errorObj = JSON.parse(error.message);
             res.status(errorObj.status).json({ message: errorObj.message });

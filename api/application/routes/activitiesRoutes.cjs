@@ -16,6 +16,8 @@ router.get('/user/:userId',  (req, res) => activitiesController.getActivitiesByU
 // Crear una nueva actividad
 router.post('/', (req, res) => activitiesController.createActivity(req, res));
 
+router.post('/etiquetas/', (req, res) => activitiesController.addLabelToActivity(req, res));
+
 // Actualizar una actividad por su ID
 router.put('/:id', (req, res) => activitiesController.updateActivity(req, res));
 
